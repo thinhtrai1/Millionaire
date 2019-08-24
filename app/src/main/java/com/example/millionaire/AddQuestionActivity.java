@@ -12,7 +12,7 @@ import android.widget.Toast;
 
 public class AddQuestionActivity extends AppCompatActivity {
 
-    public static EditText levelEdt, questionEdt, a, b, c, d, tru;
+    static EditText levelEdt, questionEdt, a, b, c, d, tru;
     static Button addButton, viewQuestionBtn, back;
     static TextView viewQuestionTv;
     QuestionDatabase questionDatabase = new QuestionDatabase(this);
@@ -61,7 +61,6 @@ public class AddQuestionActivity extends AppCompatActivity {
         viewQuestionBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-//                viewQuestion();
                 questionDatabase.getAllQuestion();
                 viewQuestionTv.setText(QuestionDatabase.text);
             }

@@ -36,7 +36,7 @@ public class QuestionDatabase extends SQLiteOpenHelper {
         cursor.moveToFirst();
         int x = Integer.valueOf(AddQuestionActivity.levelEdt.getText().toString()) * 100;
         int y = 0;
-        while (cursor.isAfterLast() == false) {
+        while (!cursor.isAfterLast()) {
             if (Integer.valueOf(cursor.getString(2)) > x && Integer.valueOf(cursor.getString(2)) > y && Integer.valueOf(cursor.getString(2)) < x + 99) {
                 y = Integer.valueOf(cursor.getString(2));
             }
@@ -64,7 +64,7 @@ public class QuestionDatabase extends SQLiteOpenHelper {
         SQLiteDatabase db = this.getWritableDatabase();
         Cursor cursor = db.rawQuery(selectQuery, null);
         cursor.moveToFirst();
-        while (cursor.isAfterLast() == false) {
+        while (!cursor.isAfterLast()) {
             text = text + "➤" +
                     cursor.getString(1) + "." +       //level
                     cursor.getString(2) + " - " +        //code
@@ -109,7 +109,7 @@ public class QuestionDatabase extends SQLiteOpenHelper {
     }
 
 
-    void f() {
+    private void f() {
         if (Integer.valueOf(cursor2.getString(2)) == questionnumber) {
             MainActivity.tvNumber.setText("" + x);
             MainActivity.tvQuestion.setText("Câu " + x + ": " + cursor2.getString(3));
@@ -120,7 +120,7 @@ public class QuestionDatabase extends SQLiteOpenHelper {
             MainActivity.countDownTimer.start();
         } else {
             cursor2.moveToNext();
-            if (cursor2.isAfterLast() == true) {
+            if (cursor2.isAfterLast()) {
                 x--;
                 displayQuesstion();
             } else f();

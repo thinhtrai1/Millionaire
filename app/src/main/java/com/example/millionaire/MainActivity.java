@@ -41,7 +41,7 @@ public class MainActivity extends AppCompatActivity {
     static CountDownTimer countDownTimer;
     int kq, aa, bb, cc, dd, soundPool1, soundPool2, soundPool3, soundPoolLose, soundPool5s;
     static int n, m, soundPoolWin, video_num;
-    View questionView, spectatorView, loginLayout;;
+    View questionView, spectatorView, loginLayout;
     static SoundPool soundPool;
     static Switch soundSwitch;
     MediaPlayer mediaPlayer;
@@ -107,7 +107,7 @@ public class MainActivity extends AppCompatActivity {
         }
         soundPoolWin = soundPool.load(this, R.raw.win, 1);
         soundPool1 = soundPool.load(this, R.raw.help5050, 1);
-        soundPool2 = soundPool.load(this, R.raw.spectator03, 1);
+        soundPool2 = soundPool.load(this, R.raw.spectator, 1);
         soundPool3 = soundPool.load(this, R.raw.relatives, 1);
         soundPoolLose = soundPool.load(this, R.raw.sai, 1);
         soundPool5s = soundPool.load(this, R.raw.last_5s, 1);
@@ -148,7 +148,7 @@ public class MainActivity extends AppCompatActivity {
         btA.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
             public boolean onLongClick(View view) {
-                if (login_x == false) {
+                if (!login_x) {
                     questionView.setVisibility(View.GONE);
                     loginLayout.setVisibility(View.VISIBLE);
                     Animation fadeIn = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.fade_in);
@@ -335,18 +335,23 @@ public class MainActivity extends AppCompatActivity {
         loginLayout.setVisibility(View.GONE);
         questionView.setVisibility(View.VISIBLE);
         String tt;
-        if (questionDatabase.cursor2.getString(8).equals("a"))
-            tt = questionDatabase.cursor2.getString(4);
-        else if (questionDatabase.cursor2.getString(8).equals("b"))
-            tt = questionDatabase.cursor2.getString(5);
-        else if (questionDatabase.cursor2.getString(8).equals("c"))
-            tt = questionDatabase.cursor2.getString(6);
-        else tt = questionDatabase.cursor2.getString(7);
+        switch (questionDatabase.cursor2.getString(8)) {
+            case "a":
+                tt = questionDatabase.cursor2.getString(4);
+                break;
+            case "b":
+                tt = questionDatabase.cursor2.getString(5);
+                break;
+            case "c":
+                tt = questionDatabase.cursor2.getString(6);
+                break;
+            default:
+                tt = questionDatabase.cursor2.getString(7);
+        }
         Toast.makeText(this, questionDatabase.cursor2.getString(3) + "\n" + tt.toUpperCase(), Toast.LENGTH_LONG).show();
         questionDatabase.x = 0;
         questionDatabase.displayQuesstion();
         tvProgress.setTextColor(Color.WHITE);
-        tvNumber.setBackgroundColor(Color.BLACK);
     }
 
     void help_5050() {
@@ -363,13 +368,13 @@ public class MainActivity extends AppCompatActivity {
     }
 
     void rd_5050_1() {
-        n = 1+random.nextInt(4);
+        n = 1 + random.nextInt(4);
         if (n == kq)
             rd_5050_1();
     }
 
     void rd_5050_2() {
-        m = 1+random.nextInt(4);
+        m = 1 + random.nextInt(4);
         if (m == kq || m == n)
             rd_5050_2();
         else {
@@ -381,7 +386,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     void help_relatives() {
-        int helpRela = 1+random.nextInt(15);
+        int helpRela = 1 + random.nextInt(15);
         if (helpRela == n || helpRela == m) help_relatives();
         else {
             String helpRelatives;
