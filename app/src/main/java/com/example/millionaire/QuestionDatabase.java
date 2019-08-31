@@ -9,6 +9,9 @@ import android.graphics.Color;
 import android.view.View;
 import android.widget.Toast;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class QuestionDatabase extends SQLiteOpenHelper {
     private static final String TABLE_NAME = "QuestionData";
     private Context context;
@@ -53,31 +56,33 @@ public class QuestionDatabase extends SQLiteOpenHelper {
         values.put("true", AddQuestionActivity.tru.getText().toString().toLowerCase());
 
         db.insert(TABLE_NAME, null, values);
-        Toast.makeText(context, "Add question successfylly", Toast.LENGTH_SHORT).show();
+        Toast.makeText(context, "Add question successfully", Toast.LENGTH_SHORT).show();
         cursor.close();
         db.close();
     }
 
-    void getAllQuestion() {
+    public List<Question> getAllQuestion() {
         text = "";
         String selectQuery = "SELECT  * FROM " + TABLE_NAME;
         SQLiteDatabase db = this.getWritableDatabase();
         Cursor cursor = db.rawQuery(selectQuery, null);
-        cursor.moveToFirst();
-        while (!cursor.isAfterLast()) {
-            text = text + "➤" +
-                    cursor.getString(1) + "." +       //level
-                    cursor.getString(2) + " - " +        //code
-                    cursor.getString(3) + "? A." +          //question
-                    cursor.getString(4) + " B." +           //A
-                    cursor.getString(5) + " C." +           //B
-                    cursor.getString(6) + " D." +           //C
-                    cursor.getString(7) + "  [" +          //D
-                    cursor.getString(8).toUpperCase() + "]\n";             //True
-            cursor.moveToNext();
+        List<Question> questionList = new ArrayList<>();
+        if (cursor.moveToFirst()) {
+            do {
+                Question question = new Question();
+                question.setLv(cursor.getInt(1));
+                question.setQuestion(cursor.getString(3));
+                question.setA(cursor.getString(4));
+                question.setB(cursor.getString(5));
+                question.setC(cursor.getString(6));
+                question.setD(cursor.getString(7));
+                question.setR(cursor.getString(8).toUpperCase());
+                questionList.add(question);
+
+            } while (cursor.moveToNext());
         }
-        cursor.close();
         db.close();
+        return questionList;
     }
 
     void deleteAllData() {

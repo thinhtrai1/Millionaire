@@ -7,14 +7,16 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.TextView;
+import android.widget.ListView;
 import android.widget.Toast;
+
+import java.util.List;
 
 public class AddQuestionActivity extends AppCompatActivity {
 
     static EditText levelEdt, questionEdt, a, b, c, d, tru;
     static Button addButton, viewQuestionBtn, back;
-    static TextView viewQuestionTv;
+    ListView lvQuestion;
     QuestionDatabase questionDatabase = new QuestionDatabase(this);
 
     @Override
@@ -31,8 +33,13 @@ public class AddQuestionActivity extends AppCompatActivity {
         tru = findViewById(R.id.true_add);
         viewQuestionBtn = findViewById(R.id.view_btn);
         back = findViewById(R.id.back_btn);
-        viewQuestionTv = findViewById(R.id.question_view);
         addButton = findViewById(R.id.add_btn);
+        lvQuestion = findViewById(R.id.lv_question);
+        List<Question> questionList;
+
+        questionList = questionDatabase.getAllQuestion();
+        QuestionAdapter questionAdapter = new QuestionAdapter(this,R.layout.question_item,questionList);
+        lvQuestion.setAdapter(questionAdapter);
 
         addButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -43,7 +50,7 @@ public class AddQuestionActivity extends AppCompatActivity {
                         || Integer.valueOf(levelEdt.getText().toString()) == 0
                         || (!tru.getText().toString().toLowerCase().equals("a") && !tru.getText().toString().toLowerCase().equals("b")
                         && !tru.getText().toString().toLowerCase().equals("c") && !tru.getText().toString().toLowerCase().equals("d"))) {
-                    Toast.makeText(AddQuestionActivity.this, "Add question fail", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(AddQuestionActivity.this, "Add question failed", Toast.LENGTH_SHORT).show();
                 } else {
                     questionDatabase.addQuestion();
                 }
@@ -61,8 +68,6 @@ public class AddQuestionActivity extends AppCompatActivity {
         viewQuestionBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                questionDatabase.getAllQuestion();
-                viewQuestionTv.setText(QuestionDatabase.text);
             }
         });
 

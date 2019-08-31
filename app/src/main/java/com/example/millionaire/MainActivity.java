@@ -53,8 +53,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
-                WindowManager.LayoutParams.FLAG_FULLSCREEN);
+        this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
 
         questionView = findViewById(R.id.question_view);
         spectatorView = findViewById(R.id.spectator_layout);
@@ -167,7 +166,7 @@ public class MainActivity extends AppCompatActivity {
         btB.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
             public boolean onLongClick(View view) {
-                tvQuestion.setText("MILLIONAIRE\nVersion 1.1\nNguyễn Đức Thịnh\nVery handsome and cute :)");
+                tvQuestion.setText("MILLIONAIRE\nVersion 1.1\nViet Nam\nNguyễn Đức Thịnh\nVery handsome and cute :)");
                 return false;
             }
         });
@@ -181,7 +180,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public boolean onLongClick(View view) {
                 AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
-                builder.setTitle("DELETE ALL QUESTION");
+                builder.setTitle("DELETE ALL QUESTIONS");
                 builder.setIcon(R.drawable.warning);
                 builder.setMessage("Are you sure to delete all questions?");
                 builder.setCancelable(true);
@@ -196,7 +195,7 @@ public class MainActivity extends AppCompatActivity {
                     public void onClick(DialogInterface dialogInterface, int i) {
                         questionDatabase.deleteAllData();
                         questionDefault.addDefault();
-                        Toast.makeText(MainActivity.this, "Delete All Question", Toast.LENGTH_LONG).show();
+                        Toast.makeText(MainActivity.this, "Deleted all questions", Toast.LENGTH_LONG).show();
                     }
                 });
                 builder.create();
