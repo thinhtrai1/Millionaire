@@ -207,7 +207,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 if (loginCode.getText().toString().equals("")) {
-                    Intent intent = new Intent(MainActivity.this, AddQuestionActivity.class);
+                    Intent intent = new Intent(MainActivity.this, QuestionManageActivity.class);
                     startActivity(intent);
                 } else {
                     tvQuestion.setVisibility(View.VISIBLE);

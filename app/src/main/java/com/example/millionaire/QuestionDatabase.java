@@ -17,7 +17,6 @@ public class QuestionDatabase extends SQLiteOpenHelper {
     private Context context;
     Cursor cursor2;
     int x, questionnumber;
-    static String text;
 
     public QuestionDatabase(Context context) {
         super(context, "QuestionDB2", null, 1);
@@ -32,37 +31,7 @@ public class QuestionDatabase extends SQLiteOpenHelper {
     public void onUpgrade(SQLiteDatabase sqLiteDatabase, int i, int i1) {
     }
 
-    void addQuestion() {
-        String selectQuery = "SELECT  * FROM " + TABLE_NAME;
-        SQLiteDatabase db = this.getWritableDatabase();
-        Cursor cursor = db.rawQuery(selectQuery, null);
-        cursor.moveToFirst();
-        int x = Integer.valueOf(AddQuestionActivity.levelEdt.getText().toString()) * 100;
-        int y = 0;
-        while (!cursor.isAfterLast()) {
-            if (Integer.valueOf(cursor.getString(2)) > x && Integer.valueOf(cursor.getString(2)) > y && Integer.valueOf(cursor.getString(2)) < x + 99) {
-                y = Integer.valueOf(cursor.getString(2));
-            }
-            cursor.moveToNext();
-        }
-        ContentValues values = new ContentValues();
-        values.put("level", Integer.valueOf(AddQuestionActivity.levelEdt.getText().toString()));
-        values.put("code", y + 1);
-        values.put("question", AddQuestionActivity.questionEdt.getText().toString());
-        values.put("a", AddQuestionActivity.a.getText().toString());
-        values.put("b", AddQuestionActivity.b.getText().toString());
-        values.put("c", AddQuestionActivity.c.getText().toString());
-        values.put("d", AddQuestionActivity.d.getText().toString());
-        values.put("true", AddQuestionActivity.tru.getText().toString().toLowerCase());
-
-        db.insert(TABLE_NAME, null, values);
-        Toast.makeText(context, "Add question successfully", Toast.LENGTH_SHORT).show();
-        cursor.close();
-        db.close();
-    }
-
     public List<Question> getAllQuestion() {
-        text = "";
         String selectQuery = "SELECT  * FROM " + TABLE_NAME;
         SQLiteDatabase db = this.getWritableDatabase();
         Cursor cursor = db.rawQuery(selectQuery, null);
@@ -83,6 +52,41 @@ public class QuestionDatabase extends SQLiteOpenHelper {
         }
         db.close();
         return questionList;
+    }
+
+    void addQuestion(Question question) {
+        String selectQuery = "SELECT  * FROM " + TABLE_NAME;
+        SQLiteDatabase db = this.getWritableDatabase();
+        Cursor cursor = db.rawQuery(selectQuery, null);
+        cursor.moveToFirst();
+        int x = question.getLv() * 100;
+        int y = 0;
+        while (!cursor.isAfterLast()) {
+            if (Integer.valueOf(cursor.getString(2)) > x && Integer.valueOf(cursor.getString(2)) > y && Integer.valueOf(cursor.getString(2)) < x + 99) {
+                y = Integer.valueOf(cursor.getString(2));
+            }
+            cursor.moveToNext();
+        }
+        ContentValues values = new ContentValues();
+        values.put("level", question.getLv());
+        values.put("code", y + 1);
+        values.put("question", question.getQuestion());
+        values.put("a", question.getA());
+        values.put("b", question.getB());
+        values.put("c", question.getC());
+        values.put("d", question.getD());
+        values.put("true", question.getR().toLowerCase());
+
+        db.insert(TABLE_NAME, null, values);
+        Toast.makeText(context, "Add question successfully", Toast.LENGTH_SHORT).show();
+        cursor.close();
+        db.close();
+    }
+
+    public int deleteStudent(String que) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        Toast.makeText(context, "Delete question successfully", Toast.LENGTH_SHORT).show();
+        return db.delete(TABLE_NAME, "question" + "=?", new String[]{que});
     }
 
     void deleteAllData() {

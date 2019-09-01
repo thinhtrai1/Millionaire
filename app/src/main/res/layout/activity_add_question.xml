@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".AddQuestionActivity">
+    tools:context=".QuestionManageActivity">
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
@@ -142,7 +142,7 @@
             android:id="@+id/true_add"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="True Select"
+            android:hint="Right Select"
             android:maxLength="1"
             android:paddingVertical="7dp" />
 
@@ -159,18 +159,18 @@
                 android:text="ADD" />
 
             <Button
-                android:id="@+id/view_btn"
+                android:id="@+id/delete_btn"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:text="VIEW" />
+                android:text="delete" />
 
             <Button
-                android:id="@+id/back_btn"
+                android:id="@+id/update_btn"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:text="finish" />
+                android:text="update" />
         </LinearLayout>
     </LinearLayout>
 
