@@ -78,14 +78,12 @@ public class QuestionDatabase extends SQLiteOpenHelper {
         values.put("true", question.getR().toLowerCase());
 
         db.insert(TABLE_NAME, null, values);
-        Toast.makeText(context, "Add question successfully", Toast.LENGTH_SHORT).show();
         cursor.close();
         db.close();
     }
 
     public int deleteStudent(String que) {
         SQLiteDatabase db = this.getWritableDatabase();
-        Toast.makeText(context, "Delete question successfully", Toast.LENGTH_SHORT).show();
         return db.delete(TABLE_NAME, "question" + "=?", new String[]{que});
     }
 

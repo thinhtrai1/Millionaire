@@ -3,6 +3,7 @@ package com.example.millionaire;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
@@ -76,6 +77,8 @@ public class QuestionManageActivity extends AppCompatActivity {
                     questionList.clear();
                     questionList.addAll(questionDatabase.getAllQuestion());
                     questionAdapter.notifyDataSetChanged();
+                    lvQuestion.setAdapter(questionAdapter);
+                    Toast.makeText(QuestionManageActivity.this, "Add question successfully", Toast.LENGTH_SHORT).show();
                 }
             }
         });
@@ -87,6 +90,8 @@ public class QuestionManageActivity extends AppCompatActivity {
                     questionList.clear();
                     questionList.addAll(questionDatabase.getAllQuestion());
                     questionAdapter.notifyDataSetChanged();
+                    lvQuestion.setAdapter(questionAdapter);
+                    Toast.makeText(QuestionManageActivity.this, "Delete question successfully", Toast.LENGTH_SHORT).show();
                 } else
                     Toast.makeText(QuestionManageActivity.this, "Delete failed", Toast.LENGTH_SHORT).show();
             }
@@ -103,6 +108,8 @@ public class QuestionManageActivity extends AppCompatActivity {
                     questionList.clear();
                     questionList.addAll(questionDatabase.getAllQuestion());
                     questionAdapter.notifyDataSetChanged();
+                    lvQuestion.setAdapter(questionAdapter);
+                    Toast.makeText(QuestionManageActivity.this, "Update question successfully", Toast.LENGTH_SHORT).show();
                 }
             }
         });
